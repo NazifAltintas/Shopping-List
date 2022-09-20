@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Shopping List</title>
+
+    <style>
+        table {
+            width: 70%;
+            border-collapse: collapse;
+        }
+
+        td {
+
+            border: 1px solid grey;
+            border-collapse: collapse;
+        }
+
+        th {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+
+<h2>My Shopping List</h2>
+<form th:action="@{/addProduct}" method="post">
+    <table>
+        <tr>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Single Price</th>
+            <th>Total Price</th>
+        </tr>
+        <tr th:each="product:${shoppingList}">
+            <td th:text="${product.name}">""</td>
+            <td th:text="${product.amount}"></td>
+            <td th:text="${product.price}">""</td>
+            <td th:text="${product.totalPrice()}"></td>
+            <td ><a th:href="@{/cancelProduct/{id}(id= ${product.id})}"><input type="button"
+                                                                                               value="Delete"/></a>  <a
+                    th:href="@{/updateProduct/{id}(id= ${product.id})}"><input type="button" value="Update"/></a></td>
+
+        </tr>
+        <tr>
+            <td><b>Total</b></td>
+            <td></td>
+            <td></td>
+            <td><b th:text="${totalPrice}"> </b></td>
+        </tr>
+    </table>
+    <br><br>
+    <br><br>
+
+    <table>
+
+        <tr>
+            <th><input name="name" size="33" type="text" minlength="2" placeholder="Name is mandatory and must be unique"/></th>
+            <th><input name="amount" type="number" min="1" placeholder="Amount is mandatory"/></th>
+            <th><input name="price" type="number" min="0.01" step="0.01" placeholder="Price is mandatory"/></th>
+            <th>
+                <button type="submit">Add Item</button>
+            </th>
+        </tr>
+
+    </table>
+</form>
+
+</body>
+</html>
